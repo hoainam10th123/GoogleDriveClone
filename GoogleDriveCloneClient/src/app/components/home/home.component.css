@@ -1,0 +1,39 @@
+.mat-list-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.status-upload-file{
+  position: fixed;
+  min-width: 280px;
+  max-width: 450px;
+  right: 1px;
+  bottom: 1px;
+  z-index: 222;
+}
+
+.restore{
+  position: fixed;
+  right: 1px;
+  bottom: 1px;
+  z-index: 222;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.centered{
+  position: fixed;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,134 @@
+<ng-template #popTemplate>
+    <form [formGroup]="shortForm" (ngSubmit)="onSubmitShortUrl()">
+        <div class="mb-3">
+            <label for="fullUrl" class="form-label">Short url</label>
+
+            <input type="text" class="form-control"
+                [class.is-invalid]='shortForm.get("url")!.errors && shortForm.get("url")!.touched'
+                formControlName='url' id="url" aria-describedby="emailHelp">
+
+            <div id="emailHelp" class="form-text">Enter short url to get data.</div>
+            <div class="invalid-feedback" *ngIf="shortForm.get('url')!.hasError('required')">Required short url!</div>
+        </div>
+        <div class="d-flex flex-row-reverse">
+            <button [disabled]="!shortForm.valid" type="submit" class="btn btn-primary">Get</button>
+        </div>
+        
+    </form>
+</ng-template>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                Featured
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    File Or Folder: <span class="badge bg-danger">{{data.length}}</span>
+                </li>
+                <li class="list-group-item">
+                    <button [popover]="popTemplate" popoverTitle="Enter short Url"
+                        class="w-100 btn btn-info">Enter short-url</button>
+                </li>
+                <li class="list-group-item">A third item</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <nav class="nav nav-pills nav-fill border">
+            <a class="nav-link">
+                <button (click)="newFolderModalWithComponent()" type="button" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus"></i>
+                    New folder
+                </button>
+            </a>
+            <a class="nav-link">
+                <label class="custom-file-upload">
+                    <input #file type="file" id="myfile" name="myfile" accept="*.*" multiple (change)="upload(file.files)">
+                    <i class="fas fa-file-upload"></i>
+                    Upload file
+                </label>
+            </a>
+            <!-- disabled -->
+        </nav>
+
+        <div class="col-12">
+            <app-my-breadcrumb (getItem)="getItemMode($event)"></app-my-breadcrumb>
+        </div>
+
+        <div style="position: relative;">
+            <app-moveto class="centered" #popover></app-moveto>
+        </div>
+
+
+        <mat-list infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="true"
+            (scrolled)="onScroll()">
+
+            <div mat-subheader *ngIf="data.length == 0">No item</div>
+
+            <mat-list-item *ngFor="let item of data" (dblclick)="doubleClick(item.fullPath, item.name)">
+                <mat-icon mat-list-icon *ngIf="item.isFolder; else elseBlock">folder</mat-icon>
+                <ng-template #elseBlock>
+                    <mat-icon mat-list-icon>note</mat-icon>
+                </ng-template>
+                <div mat-line>{{item.name}}</div>
+                <div mat-line>10/12/2021</div>
+
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="moveFileOrFolder(item)">
+                        <mat-icon>forward</mat-icon>
+                        <span>Move to</span>
+                    </button>
+                    <button mat-menu-item (click)="renameModalWithComponent(item)">
+                        <mat-icon>drive_file_rename_outline</mat-icon>
+                        <span>Rename</span>
+                    </button>
+                    <button mat-menu-item (click)="sharedToUserWithComponent(item)">
+                        <mat-icon>share</mat-icon>
+                        <span>Share to</span>
+                    </button>
+                    <button mat-menu-item [disabled]="item.isFolder === true">
+                        <mat-icon>file_download</mat-icon>
+                        <span>Download</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="deleteFileOrFolder(item)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                </mat-menu>
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>
+
+<div style="position: relative;">
+    <div [hidden]="hiddenProcessUploadFile" class="card status-upload-file">
+        <div class="card-header text-danger">
+            Process upload file
+            <span style="float: right;" (click)="showProcessUploadFile()"><i class="far fa-times-circle"></i></span>
+        </div>
+        <div class="card-body">
+            <div class="border" *ngFor="let item of progressInfos">
+                <h4 class="card-title">{{item.fileName}}</h4>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="mb-2">
+                            <progressbar [max]="maxPercent" [value]="item.value" type="danger" [striped]="true" [animate]="true">
+                                <i>{{item.value}}/{{maxPercent}}</i>
+                            </progressbar>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <div [hidden]="!hiddenProcessUploadFile" class="restore">
+        <button class="btn btn-success" (click)="showProcessUploadFile()"><i class="fas fa-undo"></i></button>
+    </div>
+</div>

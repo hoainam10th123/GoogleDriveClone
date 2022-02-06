@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left text-success">Share File or Folder</h4>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="cmtForm" (ngSubmit)="onSubmitData()">
+
+    <div class="form-control">
+      <select2 [data]="data" [templates]="template" [multiple]="true" (update)="updateEvent($event)"
+        customSearchEnabled="true" (search)="searchEvent($event)">
+        <ng-template #template let-data="data">
+          <div class="d-flex align-items-center">
+            <div class="mr">
+              <img src="{{data?.url}}" alt="" style="max-height: 50px;" class="rounded-circle">
+            </div>
+            <div style="font-weight: bold;">
+              {{data?.name}}
+              <div class="text-muted">{{data?.username}}</div>
+            </div>
+          </div>
+        </ng-template>
+      </select2>
+    </div>
+
+    <select class="form-select">
+      <option selected>Role</option>
+      <option value="1">User seen</option>
+      <option value="2">User modified</option>
+    </select>
+
+    <div class="mb-3">
+      <label for="message" class="form-label">Message</label>
+      <textarea id="message" formControlName='content' name="content" class="form-control" placeholder="message here...">
+      </textarea>
+    </div>
+
+    <div class="d-flex">
+      <input readonly formControlName='shortUrl' class="form-control" type="text" [(ngModel)]="shortUrl">
+      <button type="button" [disabled]="shortUrl==''" class="btn btn-secondary" [cdkCopyToClipboard]="shortUrl">Copy to clipboard</button>
+    </div>
+    
+    <div class="d-flex flex-row-reverse" style="margin-top: 15px;">
+      <button [disabled]="tagUsernames.length === 0" type="submit" class="btn btn-primary">Send</button>
+      <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,33 @@
+<p>
+    <span [popover]="popTemplate" triggers="" #pop="bs-popover">
+    </span>
+</p>
+
+<ng-template #popTemplate>
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div (click)="back()">
+                <i style="font-size: 20px;" class="fas fa-long-arrow-alt-left"></i>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 0px;">{{name}}</h4>
+            </div>
+            <div>
+                <i class="fas fa-times" (click)="hide()"></i>
+            </div>
+        </div>
+        <div class="card-body">
+            <mat-list style="max-height: 250px; overflow-y: scroll;" infiniteScroll [infiniteScrollDistance]="2"
+                [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="onScroll()">
+
+                <mat-list-item [disabled]="selectedItem?.fullPath === item.fullPath" *ngFor="let item of data" (click)="onClickOnPopover(item)">                    
+                    <mat-icon mat-list-icon>folder</mat-icon>                    
+                    <div mat-line>{{item.name}}</div>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="card-footer d-flex flex-row-reverse">
+            <button class="btn btn-danger" [disabled]="selectedItem === undefined" (click)="moveAction()">Move</button>
+        </div>
+    </div>
+</ng-template>

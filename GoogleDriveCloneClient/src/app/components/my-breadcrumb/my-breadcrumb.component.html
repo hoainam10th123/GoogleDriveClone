@@ -1,0 +1,7 @@
+<nav aria-label="breadcrumb" style="margin-top: 5px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" *ngFor="let item of data">
+            <a (click)="onSelect(item)" [ngClass]="{'active': selectedItem === item}">{{item.name}}</a>
+        </li>
+    </ol>
+</nav>

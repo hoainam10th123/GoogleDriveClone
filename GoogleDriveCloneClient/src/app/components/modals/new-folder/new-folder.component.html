@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">New Folder</h4>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="renameForm" (ngSubmit)="save()">
+    <div class="form-floating">
+      <input type="text" class="form-control"
+        [class.is-invalid]='renameForm.get("name")!.errors && renameForm.get("name")!.touched' formControlName='name'
+        id="floatingInput" placeholder="Name">
+      <label for="floatingInput">Name</label>
+      <div class="invalid-feedback" *ngIf="renameForm.get('name')!.hasError('required')">Required name!</div>
+      <div *ngIf="renameForm.get('name')!.hasError('maxlength')" class="invalid-feedback">
+        Name maximum is: {{renameForm.get('name').errors.maxlength['requiredLength']}}
+      </div>
+    </div>
+
+    <button [disabled]="!renameForm.valid" class="w-100 btn btn-lg btn-success" type="submit">Save</button>
+  </form>
+</div>

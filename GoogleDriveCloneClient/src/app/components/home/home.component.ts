@@ -1,6 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -164,11 +164,11 @@ export class HomeComponent implements OnInit {
     this.popover.Source = item;
   }
 
-  shortForm: FormGroup;
+  shortForm: UntypedFormGroup;
 
   createShortUrlForm() {
-    this.shortForm = new FormGroup({
-      url: new FormControl('', [Validators.required])
+    this.shortForm = new UntypedFormGroup({
+      url: new UntypedFormControl('', [Validators.required])
     });
   }
 

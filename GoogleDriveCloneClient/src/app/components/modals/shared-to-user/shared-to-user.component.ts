@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Select2Data, Select2SearchEvent, Select2UpdateEvent } from 'ng-select2-component';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { SharedService } from 'src/app/_services/shared.service';
   styleUrls: ['./shared-to-user.component.css']
 })
 export class SharedToUserComponent implements OnInit {
-  cmtForm: FormGroup;
+  cmtForm: UntypedFormGroup;
   data: Select2Data = [
     // {
     //   value: 'hoainam10th1',
@@ -39,9 +39,9 @@ export class SharedToUserComponent implements OnInit {
   }
 
   khoiTaoForm(){
-    this.cmtForm = new FormGroup({
-      content: new FormControl('', Validators.required),
-      shortUrl: new FormControl('')   
+    this.cmtForm = new UntypedFormGroup({
+      content: new UntypedFormControl('', Validators.required),
+      shortUrl: new UntypedFormControl('')   
     });
   }
 

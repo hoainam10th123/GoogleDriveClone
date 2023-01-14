@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
 
@@ -9,7 +9,7 @@ import { AccountService } from 'src/app/_services/account.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   errors: string[];
 
   constructor(private accountService: AccountService, private router: Router) { }
@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
   }
 
   createLoginForm() {
-    this.loginForm = new FormGroup({
-      userName: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)])
+    this.loginForm = new UntypedFormGroup({
+      userName: new UntypedFormControl('', [Validators.required]),
+      password: new UntypedFormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(25)])
     });
   }
 

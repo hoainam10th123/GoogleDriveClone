@@ -12,10 +12,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
+import {MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-menu';
+import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
